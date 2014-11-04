@@ -14,7 +14,7 @@ msgstr ""
 
 #: pdfshuffler/pdfshuffler.py:110
 msgid "Can't load icon. Application is not installed correctly."
-msgstr "Kann nicht geladen werden. Programm ist nicht richtig installiert."
+msgstr ""
 
 #: pdfshuffler/pdfshuffler.py:233
 msgid "_Rotate Right"
@@ -45,7 +45,7 @@ msgstr "Mehrere Dateien"
 #: pdfshuffler/pdfshuffler.py:317
 #, python-format
 msgid "Rendering thumbnails... [%(i1)s/%(i2)s]"
-msgstr "Vorschau Rendern"
+msgstr ""
 
 #: pdfshuffler/pdfshuffler.py:435
 msgid "page"
@@ -139,8 +139,7 @@ msgstr "Dialogfenster wurde geschlossen"
 msgid ""
 "%s is a tool for rearranging and modifying PDF files. Developed using GTK+ "
 "and Python"
-msgstr "%s ist ein Programm für das umstellen und modifizieren von PDF Dokumenten. Geschrieben mit GTK+ "
-"und Python"
+msgstr ""
 
 #: data/pdfshuffler.ui.h:1
 msgid "Crop"
@@ -156,7 +155,7 @@ msgstr "Importieren"
 
 #: data/pdfshuffler.ui.h:4
 msgid "Open a file and append it to the current document"
-msgstr "Dokument öffnen und zum bereits geöffneten Dokument hinzufügen"
+msgstr ""
 
 #: data/pdfshuffler.ui.h:5
 msgid "Rotate left"
@@ -176,15 +175,15 @@ msgstr "Speichern als"
 
 #: data/pdfshuffler.ui.h:9
 msgid "Zoom in"
-msgstr "Vergrössern"
+msgstr ""
 
 #: data/pdfshuffler.ui.h:10
 msgid "Zoom out"
-msgstr "Verkleinern"
+msgstr ""
 
 #: data/pdfshuffler.ui.h:11
 msgid "_Edit"
-msgstr "Bearbeiten"
+msgstr ""
 
 #: data/pdfshuffler.ui.h:12
 msgid "_File"
@@ -196,7 +195,7 @@ msgstr "_Hilfe"
 
 #: data/pdfshuffler.ui.h:14
 msgid "_View"
-msgstr "Ansicht"
+msgstr ""
 
 #~ msgid "Import pdf"
 #~ msgstr "Importieren von PDF"
