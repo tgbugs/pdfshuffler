@@ -26,6 +26,7 @@
 
 """
 
+from __future__ import print_function
 import os
 import shutil       # for file operations like whole directory deletion
 import sys          # for proccessing of command line args
@@ -36,7 +37,11 @@ from copy import copy
 
 import locale       #for multilanguage support
 import gettext
-gettext.install('pdfshuffler', unicode=1)
+try:
+    gettext.install('pdfshuffler', unicode=1)
+except TypeError:  # 2 -> 3
+    gettext.install('pdfshuffler')
+
 _ = gettext.gettext
 
 APPNAME = 'PdfShuffler' # PDF-Shuffler, PDFShuffler, pdfshuffler
@@ -97,7 +102,7 @@ class PdfShuffler:
     def __init__(self):
         # Create the temporary directory
         self.tmp_dir = tempfile.mkdtemp("pdfshuffler")
-        os.chmod(self.tmp_dir, 0700)
+        os.chmod(self.tmp_dir, 0o0700)
 
         icon_theme = Gtk.IconTheme.get_default()
         try:
@@ -497,7 +502,7 @@ class PdfShuffler:
                     self.export_to_file(file_out, only_selected)
                     self.export_directory = path
                     self.set_unsaved(False)
-                except Exception, e:
+                except Exception as e:
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
@@ -524,7 +529,7 @@ class PdfShuffler:
                     errmsg = _('File %s is encrypted.\n'
                                'Support for encrypted files has not been implemented yet.\n'
                                'File export failed.') % pdfdoc.filename
-                    raise Exception, errmsg
+                    raise Exception(errmsg)
                 #FIXME
                 #else
                 #   ask for password and decrypt file
@@ -615,7 +620,7 @@ class PdfShuffler:
                             print(_('File type not supported!'))
                     else:
                         print(_('File %s does not exist') % filename)
-                except Exception, e:
+                except Exception as e:
                     chooser.destroy()
                     self.error_message_dialog(e)
                     return
@@ -855,7 +860,7 @@ class PdfShuffler:
                 try:
                     if os.path.isfile(filename): # is it a file?
                         self.add_pdf_pages(filename)
-                except Exception, e:
+                except Exception as e:
                     self.error_message_dialog(e)
                 
 
@@ -1113,8 +1118,8 @@ class PDF_Renderer(threading.Thread,GObject.GObject):
                     GObject.idle_add(self.emit,'update_thumbnail',
                                      idx, thumbnail, self.resample,
                                      priority=GObject.PRIORITY_LOW)
-                except Exception,e:
-                    print e
+                except Exception as e:
+                    print(e)
 
 
 def main():
