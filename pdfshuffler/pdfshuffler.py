@@ -547,7 +547,7 @@ class PdfShuffler:
             npage = row[3]
             current_page = copy(pdf_input[nfile - 1].getPage(npage - 1))
             angle = row[6]
-            angle0 = current_page.get("/Rotate",0)
+            angle0 = current_page.get("/Rotate", 0)
             crop = [row[7],row[8],row[9],row[10]]
             if angle != 0:
                 current_page.rotateClockwise(angle)
@@ -576,7 +576,8 @@ class PdfShuffler:
             pdf_output.addPage(current_page)
 
         # finally, write "output" to document-output.pdf
-        pdf_output.write(open(file_out, 'wb'))
+        with open(file_out, 'wb') as pdffile:
+            pdf_output.write(pdffile)
 
     def on_action_add_doc_activate(self, widget, data=None):
         """Import doc"""
