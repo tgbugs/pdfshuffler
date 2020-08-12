@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #
-# PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and 
+# PdfShuffler 0.7.0 - GTK+ based utility for splitting, rearrangement and
 # modification of PDF documents.
 # Copyright (C) 2008-2014 Konstantinos Poulios
 # <https://sourceforge.net/projects/pdfshuffler>
@@ -25,20 +25,23 @@ import os
 import re
 from distutils.core import setup
 
-data_files=[('share/pdfshuffler', ['data/pdfshuffler.ui']),
-            ('share/applications', ['data/pdfshuffler.desktop']),
-            ('share/man/man1', ['doc/pdfshuffler.1']),
-            ('share/pixmaps', ['data/pdfshuffler.png']),
-            ('share/pdfshuffler/icons/hicolor/scalable',
-                ['data/pdfshuffler.svg']) ]
+data_files = [
+    ('share/pdfshuffler', ['data/pdfshuffler.ui']),
+    ('share/applications', ['data/pdfshuffler.desktop']),
+    ('share/man/man1', ['doc/pdfshuffler.1']),
+    ('share/pixmaps', ['data/pdfshuffler.png']),
+    ('share/pdfshuffler/icons/hicolor/scalable', ['data/pdfshuffler.svg'])
+]
 
 
 # Freshly generate .mo from .po, add to data_files:
 if os.path.isdir('mo/'):
-    os.system ('rm -r mo/')
+    os.system('rm -r mo/')
+
 for name in os.listdir('po'):
     m = re.match(r'(.+)\.po$', name)
-    if m != None:
+
+    if m is not None:
         lang = m.group(1)
         out_dir = 'mo/%s/LC_MESSAGES' % lang
         out_name = os.path.join(out_dir, 'pdfshuffler.mo')
@@ -47,21 +50,23 @@ for name in os.listdir('po'):
         os.system('msgfmt -o %s po/%s' % (out_name, name))
         data_files.append((install_dir, [out_name]))
 
-setup(name='pdfshuffler',
-      version='0.7.0',
-      author='Konstantinos Poulios',
-      author_email='logari81 at gmail dot com',
-      description='A simple application for PDF Merging, Rearranging, and Splitting',
-      url = 'https://sourceforge.net/projects/pdfshuffler',
-      license='GNU GPL-3',
-      scripts=['bin/pdfshuffler'],
-      packages=['pdfshuffler'],
-      data_files=data_files
-     )
+setup(
+    name='pdfshuffler',
+    version='0.7.0',
+    author='Konstantinos Poulios',
+    author_email='logari81 at gmail dot com',
+    description='A simple application for PDF Merging, Rearranging, and Splitting',
+    url='https://sourceforge.net/projects/pdfshuffler',
+    license='GNU GPL-3',
+    scripts=['bin/pdfshuffler'],
+    packages=['pdfshuffler'],
+    install_requires=['pygobject', 'pypdf2'],
+    data_files=data_files,
+)
 
 # Clean up temporary files
 if os.path.isdir('mo/'):
-    os.system ('rm -r mo/')
-if os.path.isdir('build/'):
-    os.system ('rm -r build/')
+    os.system('rm -r mo/')
 
+if os.path.isdir('build/'):
+    os.system('rm -r build/')
