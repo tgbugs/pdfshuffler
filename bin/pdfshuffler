@@ -27,8 +27,8 @@
 """
 
 try:
-   from pdfshuffler.pdfshuffler import main
-   main()
+    from pdfshuffler.pdfshuffler import main
+    main()
 except ImportError as e:
-   print('Error: Could not import pdfshuffler')
-   print('Cause: %s' % e)
+    print('Error: Could not import pdfshuffler')
+    print('Cause: %s' % e)

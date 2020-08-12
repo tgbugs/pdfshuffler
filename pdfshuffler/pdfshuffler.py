@@ -35,8 +35,8 @@ import threading
 import tempfile
 from copy import copy
 
-import locale       #for multilanguage support
 import gettext
+
 try:
     gettext.install('pdfshuffler', unicode=1)
 except TypeError:  # 2 -> 3
@@ -44,7 +44,7 @@ except TypeError:  # 2 -> 3
 
 _ = gettext.gettext
 
-APPNAME = 'PdfShuffler' # PDF-Shuffler, PDFShuffler, pdfshuffler
+APPNAME = 'PdfShuffler'  # PDF-Shuffler, PDFShuffler, pdfshuffler
 VERSION = '0.7.0'
 WEBSITE = 'http://pdfshuffler.sourceforge.net/'
 LICENSE = 'GNU General Public License (GPL) Version 3.'
@@ -53,11 +53,11 @@ try:
     import gi
     gi.require_version('Gtk', '3.0')
     from gi.repository import Gtk
-except:
+except ImportError:
     print('You do not have the required version of GTK+ installed.\n\n' +
           'Installed GTK+ version is ' +
-          '.'.join([str(Gtk.get_major_version()), \
-                    str(Gtk.get_minor_version()), \
+          '.'.join([str(Gtk.get_major_version()),
+                    str(Gtk.get_minor_version()),
                     str(Gtk.get_micro_version())]) + '\n' +
           'Required GTK+ version is 3.0 or higher')
     sys.exit(1)
@@ -74,10 +74,12 @@ try:
 except ImportError:
     from PyPDF2 import PdfFileWriter, PdfFileReader
 
-from pdfshuffler_iconview import CellRendererImage
+from pdfshuffler.pdfshuffler_iconview import CellRendererImage
+
 GObject.type_register(CellRendererImage)
 
 import time
+
 
 class PdfShuffler:
     prefs = {
@@ -116,8 +118,7 @@ class PdfShuffler:
             ui_path = '/usr/local/share/pdfshuffler/pdfshuffler.ui'
 
         if not os.path.exists(ui_path):
-            parent_dir = os.path.dirname( \
-                         os.path.dirname(os.path.realpath(__file__)))
+            parent_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
             ui_path = os.path.join(parent_dir, 'data', 'pdfshuffler.ui')
 
         if not os.path.exists(ui_path):
@@ -125,8 +126,7 @@ class PdfShuffler:
             while tail != 'lib' and tail != '':
                 head, tail = os.path.split(head)
             if tail == 'lib':
-                ui_path = os.path.join(head, 'share', 'pdfshuffler', \
-                                       'pdfshuffler.ui')
+                ui_path = os.path.join(head, 'share', 'pdfshuffler', 'pdfshuffler.ui')
 
         self.uiXML = Gtk.Builder()
         self.uiXML.add_from_file(ui_path)
@@ -181,7 +181,7 @@ class PdfShuffler:
 
         self.iconview = Gtk.IconView(self.model)
         self.iconview.clear()
-        self.iconview.set_item_width(-1) #self.iv_col_width + 12)
+        self.iconview.set_item_width(-1)  # self.iv_col_width + 12)
 
         self.cellthmb = CellRendererImage()
         self.iconview.pack_start(self.cellthmb, False)
@@ -230,7 +230,7 @@ class PdfShuffler:
 
         # Define window callback function and show window
         self.window.connect('size_allocate', self.on_window_size_request)        # resize
-        self.window.connect('key_press_event', self.on_keypress_event ) # keypress
+        self.window.connect('key_press_event', self.on_keypress_event)  # keypress
         self.window.show_all()
         self.progress_bar.hide()
 
@@ -519,18 +519,20 @@ class PdfShuffler:
         pdf_output = PdfFileWriter()
         pdf_input = []
         for pdfdoc in self.pdfqueue:
-            pdfdoc_inp = PdfFileReader(file(pdfdoc.copyname, 'rb'))
+            pdfdoc_inp = PdfFileReader(open(pdfdoc.copyname, 'rb'))
             if pdfdoc_inp.getIsEncrypted():
-                try: # Workaround for lp:#355479
+                try:  # Workaround for lp:#355479
                     stat = pdfdoc_inp.decrypt('')
                 except:
                     stat = 0
-                if (stat!=1):
+
+                if stat != 1:
                     errmsg = _('File %s is encrypted.\n'
                                'Support for encrypted files has not been implemented yet.\n'
                                'File export failed.') % pdfdoc.filename
                     raise Exception(errmsg)
-                #FIXME
+
+                # FIXME
                 #else
                 #   ask for password and decrypt file
             pdf_input.append(pdfdoc_inp)
@@ -543,7 +545,7 @@ class PdfShuffler:
             # add pages from input to output document
             nfile = row[2]
             npage = row[3]
-            current_page = copy(pdf_input[nfile-1].getPage(npage-1))
+            current_page = copy(pdf_input[nfile - 1].getPage(npage - 1))
             angle = row[6]
             angle0 = current_page.get("/Rotate",0)
             crop = [row[7],row[8],row[9],row[10]]
@@ -574,7 +576,7 @@ class PdfShuffler:
             pdf_output.addPage(current_page)
 
         # finally, write "output" to document-output.pdf
-        pdf_output.write(file(file_out, 'wb'))
+        pdf_output.write(open(file_out, 'wb'))
 
     def on_action_add_doc_activate(self, widget, data=None):
         """Import doc"""
@@ -930,7 +932,7 @@ class PdfShuffler:
         if len(selection) > 0:
             self.set_unsaved(True)
         rotate_times = (((-angle) % 360 + 45) / 90) % 4
-        if rotate_times is not 0:
+        if rotate_times != 0:
             for path in selection:
                 iter = model.get_iter(path)
                 nfile = model.get_value(iter, 2)

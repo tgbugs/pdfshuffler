@@ -28,39 +28,39 @@
 
 from gi.repository import Gtk
 from gi.repository import GObject
-import cairo
 
 from math import pi as M_PI
 
+
 class CellRendererImage(Gtk.CellRenderer):
     __gproperties__ = {
-            "image": (GObject.TYPE_PYOBJECT, "Image", "Image",
-                      GObject.PARAM_READWRITE),
-            "width": (GObject.TYPE_FLOAT, "Width", "Width",
-                      0., 1.e4, 0., GObject.PARAM_READWRITE),
-            "height": (GObject.TYPE_FLOAT, "Height", "Height",
-                       0., 1.e4, 0., GObject.PARAM_READWRITE),
-            "rotation": (GObject.TYPE_INT, "Rotation", "Rotation",
-                         0, 360, 0, GObject.PARAM_READWRITE),
-            "scale": (GObject.TYPE_FLOAT, "Scale", "Scale",
-                      0.01, 100., 1., GObject.PARAM_READWRITE),
-            "resample": (GObject.TYPE_FLOAT,
+        "image": (GObject.TYPE_PYOBJECT, "Image", "Image",
+                  GObject.PARAM_READWRITE),
+        "width": (GObject.TYPE_FLOAT, "Width", "Width",
+                  0., 1.e4, 0., GObject.PARAM_READWRITE),
+        "height": (GObject.TYPE_FLOAT, "Height", "Height",
+                   0., 1.e4, 0., GObject.PARAM_READWRITE),
+        "rotation": (GObject.TYPE_INT, "Rotation", "Rotation",
+                     0, 360, 0, GObject.PARAM_READWRITE),
+        "scale": (GObject.TYPE_FLOAT, "Scale", "Scale",
+                  0.01, 100., 1., GObject.PARAM_READWRITE),
+        "resample": (GObject.TYPE_FLOAT,
                      "Resample", "Resample Coefficient",
-                      1., 100., 1., GObject.PARAM_READWRITE),
-            "cropL": (GObject.TYPE_FLOAT, "CropL", "CropL",
-                      0., 1., 0., GObject.PARAM_READWRITE),
-            "cropR": (GObject.TYPE_FLOAT, "CropR", "CropR",
-                      0., 1., 0., GObject.PARAM_READWRITE),
-            "cropT": (GObject.TYPE_FLOAT, "CropT", "CropT",
-                      0., 1., 0., GObject.PARAM_READWRITE),
-            "cropB": (GObject.TYPE_FLOAT, "CropB", "CropB",
-                      0., 1., 0., GObject.PARAM_READWRITE),
+                     1., 100., 1., GObject.PARAM_READWRITE),
+        "cropL": (GObject.TYPE_FLOAT, "CropL", "CropL",
+                  0., 1., 0., GObject.PARAM_READWRITE),
+        "cropR": (GObject.TYPE_FLOAT, "CropR", "CropR",
+                  0., 1., 0., GObject.PARAM_READWRITE),
+        "cropT": (GObject.TYPE_FLOAT, "CropT", "CropT",
+                  0., 1., 0., GObject.PARAM_READWRITE),
+        "cropB": (GObject.TYPE_FLOAT, "CropB", "CropB",
+                  0., 1., 0., GObject.PARAM_READWRITE),
     }
 
     def __init__(self):
         Gtk.CellRenderer.__init__(self)
-        self.th1 = 2. # border thickness
-        self.th2 = 3. # shadow thickness
+        self.th1 = 2.  # border thickness
+        self.th2 = 3.  # shadow thickness
 
     def get_geometry(self):
 
@@ -83,7 +83,7 @@ class CellRendererImage(Gtk.CellRenderer):
         scale = self.resample * self.scale
         w2 = int(scale * (1. - self.cropL - self.cropR) * w1)
         h2 = int(scale * (1. - self.cropT - self.cropB) * h1)
-        
+
         return w0,h0,w1,h1,w2,h2,rotation
 
     def do_set_property(self, pspec, value):
