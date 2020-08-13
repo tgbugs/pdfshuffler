@@ -1,4 +1,12 @@
-Forked from https://sourceforge.net/projects/pdfshuffler/
+This repo has been archived since https://github.com/jeromerobert/pdfarranger
+is actively maintaned and has a community of users. This message is here
+in case someone stubles on this repo when searching for pdfshuffler in
+hopes that they will find their way to an actively maintained fork.
+
+Originally forked from https://sourceforge.net/projects/pdfshuffler/
+There is a mirror from the original author of the sourceforgre repo at
+https://github.com/logari81/pdfshuffler.
+
 
 PDF-Shuffler 0.7
 ------------------
