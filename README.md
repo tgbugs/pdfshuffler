@@ -12,7 +12,7 @@ PDF-Shuffler is written in Python using PyGTK. It is released under the GNU GPL-
 
 In order to install run:
 
- python setup.py install
+    python setup.py install
 
 as superuser.
 
